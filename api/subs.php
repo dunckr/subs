@@ -8,13 +8,12 @@ if (isset($_POST['email'])) {
 }
 
 try {
-	$conn = new PDO("mysql:host=$host;dbname=$database",$user,$pass);
-	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $conn = new PDO("mysql:host=$host;dbname=$database",$user,$pass);
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
   $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
   $sql = "INSERT INTO users (email,time) VALUES (:email,CURRENT_TIMESTAMP)";
   $q = $conn->prepare($sql);
   $q->execute(array(':email'=>$email));
-
 } catch (PDOException $e) {
 	echo $e->getMessage();
 }
